@@ -1,27 +1,14 @@
 # Test Scenarios
 
-## Authentication
-
-* Valid login should return token
-* Invalid login should fail
-
 ## Users
+- Get all users
+- Get single user
 
-* Get all users
-* Validate response structure
+## Authentication
+- Successful login
+- Failed login
 
-## Products
-
-* Retrieve product list
-* Validate fields (title, price)
-
-## Cart
-
-* Create cart
-* Validate cart ID generation
-
-## Negative Tests
-
-* Invalid endpoints
-* Missing request body
-* Incorrect data types
+## CRUD
+- Create user
+- Update user
+- Delete user

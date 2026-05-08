@@ -1,22 +1,17 @@
 # Test Strategy
 
 ## Objective
-
-To validate the functionality, reliability, and performance of the E-commerce API.
+Validate ReqRes API functionality using Postman.
 
 ## Scope
-
-* Authentication
-* User operations
-* Product retrieval
-* Cart management
+- User APIs
+- Authentication APIs
+- CRUD operations
 
 ## Testing Types
-
-* Functional Testing
-* Negative Testing
-* Regression Testing
-* Basic Performance Testing
+- Functional testing
+- Negative testing
+- Response validation
 
 ## Tools
 
