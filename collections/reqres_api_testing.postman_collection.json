@@ -335,7 +335,7 @@
   ],
   "variable": [
     {
-      "key": "base_url",
+      "key": "resreq_base_url",
       "value": "https://reqres.in/api"
     }
   ]
