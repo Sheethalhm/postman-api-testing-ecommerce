@@ -12,7 +12,7 @@ This project demonstrates end-to-end API testing using Postman. It covers functi
 
 ## 🌐 API Under Test
 
-https://fakestoreapi.com
+https://reqres.in/api
 
 ---
 
