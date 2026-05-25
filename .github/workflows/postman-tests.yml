@@ -1,33 +1,112 @@
-name: Run Postman Tests
+name: API Test Automation
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   api-tests:
     runs-on: ubuntu-latest
 
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Install Node.js
+      # -------------------------
+      # Python + Poetry
+      # -------------------------
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install Python Dependencies
+        run: poetry install
+
+      # -------------------------
+      # Node Setup
+      # -------------------------
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      - name: Install Newman
-        run: npm install -g newman
+      - name: Install Newman + Allure
+        run: |
+          npm install -g newman
+          npm install -g newman-reporter-allure
+          npm install -g allure-commandline
 
+      # -------------------------
+      # Run API Tests
+      # -------------------------
       - name: Run Postman Collection
         run: |
-          newman run collections/reqres_api_testing.postman_collection.json -e environments/reqres-environment.postman_environment.json
+          newman run collections/reqres_api_testing.postman_collection.json \
+          -e environments/reqres-environment.postman_environment.json \
+          -r cli,json,allure \
+          --reporter-json-export results.json
+
+      # -------------------------
+      # OpenAPI Contract Testing
+      # 
+      # Add if you want to exclude certain checks
+      # --exclude-checks unsupported_method 
+      - name: Run Contract Tests
+        env:
+          REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
+        run: |
+          poetry run schemathesis run openapi.yml --url https://reqres.in/api \
+          -H x-api-key:$REQRES_API_KEY \
+          --report-junit-path reports/junit.xml
+
+      # -------------------------
+      # Install AI Dependencies
+      # -------------------------
+      - name: Install AI Dependencies
+        run: |
+          poetry run pip install openai
+
+      # -------------------------
+      # Run AI Failure Analysis
+      # -------------------------
+      - name: Run AI Failure Analyzer
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: |
+          poetry run python ai_failure_analyzer_groq.py reports/junit.xml
+
+      # -------------------------
+      # Generate Allure Report
+      # -------------------------
+      - name: Generate Allure Report
+        run: |
+          allure generate allure-results --clean -o allure-report
+
+      # -------------------------
+      # Upload Reports
+      # -------------------------
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+
+      - name: Upload Newman JSON Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-results
+          path: results.json
+
+      - name: Upload AI Failure Analysis Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-failure-analysis-report
+          path: reports/

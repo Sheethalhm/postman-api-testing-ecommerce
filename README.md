@@ -1,139 +1,162 @@
-# 🚀 ReqRes API Testing using Postman
+🚀 AI-Augmented API Test Automation & Contract Testing Framework
 
-## 📌 Overview
+⚡ Production-Style QA Engineering Project
 
-This project demonstrates end-to-end API testing using Postman. It covers functional testing, negative testing, automation, and test data handling using the ReqRes API.
+An end-to-end API testing and validation framework that combines:
 
-## 🧰 Tools Used
+API test automation (Postman + Newman)
+Contract testing (Schemathesis + OpenAPI 3.0)
+CI/CD integration (GitHub Actions)
+AI-powered failure analysis (Groq LLM)
 
-* Postman
-* Newman (CLI runner)
+👉 Built to simulate modern QA infrastructure used in microservice-based systems
 
-## 🌐 API Under Test
+🎯 Problem Statement
 
-https://reqres.in/api
+Modern APIs evolve quickly in distributed systems, leading to:
 
----
+Broken API contracts between services
+Slow debugging cycles for test failures
+Lack of intelligent test failure insights
+Manual validation in CI pipelines
 
-## 🎯 Key Features
+💡 Solution
+This project introduces a self-validating QA pipeline that:
 
-* API request collections (Users, Auth)
-* Automated test scripts using JavaScript
-* Environment variable management
-* Data-driven testing using CSV (`data/users.csv`)
-* Negative test scenarios
-* CLI execution using Newman
+✔ Automatically tests APIs
+✔ Validates API contracts from OpenAPI
+✔ Runs in CI/CD pipelines
+✔ Uses AI to analyze failures and suggest fixes
 
----
+🧠 Architecture Overview
 
-## 📂 Project Structure
+Postman Collection
+        ↓
+Newman CLI Execution
+        ↓
+GitHub Actions CI Pipeline
+        ↓
+JUnit Test Report
+        ↓
+Schemathesis Contract Validation
+        ↓
+AI Failure Analyzer (Groq LLM)
+        ↓
+Root Cause + Fix Suggestions Report
 
-* `collections/` → Postman collection (`reqres_api_testing.postman_collection.json`)
-* `environments/` → Environment variables (`reqres-environment.postman_environment.json`)
-* `data/` → Test data (`users.csv`)
-* `docs/` → Test documentation (`learning-guide.md`, `test-scenarios.md`, `test-strategy.md`)
-* `newman/` → CLI execution scripts (`run_collection.sh`)
+🧰 Tech Stack
+| Layer	            |    Tools            |
+| API Testing       |	Postman           |
+| Automation Runner |	Newman            |
+| Contract Testing	|   Schemathesis      |
+| API Spec	        |   OpenAPI 3.0       |
+| CI/CD	            |  GitHub Actions     |
+| AI Layer	        | Groq LLM (Llama 3)  |
+| Scripting	        |  Python             |
 
----
+⚙️ Key Features
+🔹 API Test Automation
+-- Functional + negative test coverage
+-- Data-driven testing (CSV-based)
+-- Environment-driven execution
+-- Token extraction & reuse
 
-## ⚙️ Setup Instructions
+🔹 Contract Testing (Schemathesis)
+-- OpenAPI-based test generation
+-- Schema validation & drift detection
+-- Edge-case + fuzz testing
+-- Early API break detection
 
-### 1. Import Collection
+🔹 CI/CD Pipeline Integration
+-- Automated execution on push / PR
+-- Newman CLI-based test runs
+-- JUnit report generation
+-- Ready for enterprise pipelines
 
-* Open Postman
-* Import collection from `collections/reqres_api_testing.postman_collection.json`
+🔹 AI-Powered Failure Analysis
+-- Parses JUnit test failures
+-- Detects root cause patterns:
+	-- Auth failures
+	-- Schema mismatches
+	-- Status code deviations
+-- Generates:
+	-- Root cause explanation
+	-- Fix recommendations
+	-- Test improvement suggestions
 
-### 2. Import Environment
+🤖 AI Failure Analysis Example
 
-* Import environment from `environments/reqres-environment.postman_environment.json`
-* Select environment before running requests
+❌ Raw Failure Output
+401 Unauthorized
+missing_api_key
 
----
+✅ AI-Generated Insight
+-- Root Cause: Missing authentication header (x-api-key)
+-- Fix: Add API key to Postman environment variables
+-- Recommendation: Add pre-request validation for auth headers
 
-## ▶️ Running Tests in Postman
+📊 Impact & Engineering Value
 
-* Open Collection Runner
-* Select `ReqRes API Testing` collection
-* Choose `reqres-environment` environment
-* (Optional) Add data file `data/users.csv` for data-driven tests
-* Run all requests
+This project demonstrates:
 
----
+-- Shift-left testing strategy
+-- Contract-first API validation
+-- CI/CD-ready QA automation
+-- AI-assisted debugging workflows
+-- Reduced manual test failure analysis time
 
-## 🤖 Running via Newman
+📂 Project Structure
+collections/        → Postman API collections
+environments/       → Environment configs
+data/               → Data-driven test inputs (CSV)
+docs/               → Test strategy & documentation
+newman/             → CLI execution scripts
+reports/            → Test + AI analysis outputs
+scripts/            → AI failure analyzers (Groq/Gemini)
+openapi.yml         → API contract definition
+.github/workflows/  → CI/CD pipeline
 
-Install Newman:
+🚀 Getting Started
+1️⃣ Clone Repository
+git clone https://github.com/your-username/reqres-api-framework.git
+cd reqres-api-framework
 
-```
-npm install -g newman
-```
-
-Run collection with environment and data file:
-
-```
+2️⃣ Run API Tests (Postman/Newman)
 newman run collections/reqres_api_testing.postman_collection.json \
-	-e environments/reqres-environment.postman_environment.json \
-	-d data/users.csv
-```
+  -e environments/reqres-environment.postman_environment.json \
+  -d data/users.csv
 
-Or use the provided shell script (Linux/Mac):
+3️⃣ Run Contract Tests (Schemathesis)
+schemathesis run openapi.yml --url https://reqres.in/api
 
-```
-cd newman
-sh run_collection.sh
-```
+4️⃣ Run AI Failure Analysis
+python ai_failure_analyzer_groq.py reports/junit.xml
 
----
+🧪 Testing Strategy
+-- Functional API validation
+-- Negative scenario coverage
+-- Contract compliance testing
+-- RFC compliance checks (e.g., 405/Allow header)
+-- AI-based failure interpretation
 
-## 🧪 Test Coverage
+📈 What This Project Demonstrates
 
-* Authentication validation
-* User API testing
-* Negative scenarios
-* Negative scenarios
+This project reflects skills aligned with Senior QA / SDET / Platform QA roles:
 
----
+-- API automation at scale
+-- CI/CD integration mindset
+-- Contract testing expertise
+-- AI integration in engineering workflows
+-- Debugging + observability thinking
 
-## 📊 Sample Assertions
+🔮 Future Enhancements
+-- AI-generated test case creation
+-- Security testing integration (OWASP API)
+-- Performance testing pipeline
+-- Test observability dashboard
+-- Kubernetes-based execution scaling
 
-* Status code validation
-* Response time checks
-* JSON structure validation
-* Token extraction and reuse
-
----
-
-## 📚 Learning Outcomes
-
-* Understand API testing workflow
-* Learn Postman scripting
-* Implement real-world QA scenarios
-* Practice automation using Newman
-* Use data-driven testing with CSV
-* Integrate API tests with CI/CD (see `.github/workflows/` if available)
----
-
-## 📝 Documentation
-
-See the `docs/` folder for:
-- `learning-guide.md`: Postman and API testing basics
-- `test-scenarios.md`: List of test scenarios
-- `test-strategy.md`: Test approach and strategy
-
----
-
-## 💡 Improvements & Contribution
-
-- Add more negative and edge case scenarios
-- Integrate with CI/CD for automated runs
-- Add badges for build/test status
-- Add a License section if open-sourcing
-- Contributions welcome! Open issues or submit PRs
-
----
-
-## 👩‍💻 Author
+👤 Author
 
 Sheethal Holenarasipura Maheswara
-
----
+QA Automation Engineer | SDET | AI-in-Testing Enthusiast

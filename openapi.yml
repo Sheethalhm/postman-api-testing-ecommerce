@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  title: ReqRes API
+  version: 1.0.0
+
+servers:
+  - url: https://reqres.in/api
+
+paths:
+  /users:
+    get:
+      security: []
+      responses:
+        '200':
+          description: Success
