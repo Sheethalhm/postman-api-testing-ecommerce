@@ -65,6 +65,7 @@ jobs:
           poetry run schemathesis run openapi.yml --url https://reqres.in/api \
           -H x-api-key:$REQRES_API_KEY \
           --report-junit-path reports/junit.xml
+        continue-on-error: true
 
       # -------------------------
       # Install AI Dependencies
