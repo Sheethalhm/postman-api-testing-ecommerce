@@ -4,6 +4,10 @@ import json
 import requests
 import sys
 import xml.etree.ElementTree as ET
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
 
 def load_xml_report(file_path):
     tree = ET.parse(file_path)
@@ -29,7 +33,7 @@ def extract_failures_from_xml(root):
     return failures
 
 
-GEMINI_API_KEY = "AIzaSyCYj5pA9JwSYkhEhUhX_TjCiyLSwHccyNM"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 GEMINI_URL = (
     "https://generativelanguage.googleapis.com/v1beta/"
