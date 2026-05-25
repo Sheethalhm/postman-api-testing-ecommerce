@@ -6,7 +6,7 @@ authors = [
     {name = "sheethal",email = "hmsheethal123@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13,<4"
+requires-python = ">=3.11,<4"
 dependencies = [
     "schemathesis (>=4.20.0,<5.0.0)",
     "openai (>=2.38.0,<3.0.0)",
