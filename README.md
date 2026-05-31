@@ -169,3 +169,4 @@
 
 	Sheethal Holenarasipura Maheswara
 	QA Automation Engineer | SDET | AI-in-Testing Enthusiast
+	Linkedin: https://www.linkedin.com/in/sheethalhm/
